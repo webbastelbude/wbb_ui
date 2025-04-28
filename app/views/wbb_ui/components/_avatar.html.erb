@@ -1,0 +1,38 @@
+<%
+  name = avatar.name.to_s
+  seed = Zlib.crc32(name)
+  srand(seed)
+
+  def rand_color
+    "hsl(#{rand(360)}, #{rand(40..80)}%, #{rand(40..70)}%)"
+  end
+
+  shapes = 5.times.map do
+    {
+      type: [:circle, :rect].sample,
+      cx: rand(0..40),
+      cy: rand(0..40),
+      r: rand(5..12),
+      size: rand(10..25),
+      fill: rand_color,
+      rotate: rand(360)
+    }
+  end
+%>
+
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="rounded-full shadow m-2" role="img">
+  <% shapes.each do |shape| %>
+    <% if shape[:type] == :circle %>
+      <circle cx="<%= shape[:cx] %>" cy="<%= shape[:cy] %>" r="<%= shape[:r] %>" fill="<%= shape[:fill] %>" />
+    <% else %>
+      <rect
+        x="<%= shape[:cx] %>"
+        y="<%= shape[:cy] %>"
+        width="<%= shape[:size] %>"
+        height="<%= shape[:size] %>"
+        fill="<%= shape[:fill] %>"
+        transform="rotate(<%= shape[:rotate] %>, <%= shape[:cx] %>, <%= shape[:cy] %>)"
+      />
+    <% end %>
+  <% end %>
+</svg>

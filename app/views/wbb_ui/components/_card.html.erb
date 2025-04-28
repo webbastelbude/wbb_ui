@@ -1,0 +1,17 @@
+<div class="bg-white shadow-sm rounded-lg p-6">
+  <% if card.title.present? %>
+    <h2 class="text-lg font-bold mb-4"><%= card.title %></h2>
+  <% end %>
+
+  <% if slots&.body %>
+    <div class="mb-4">
+      <%= slots.body %>
+    </div>
+  <% end %>
+
+  <% if slots&.footer %>
+    <div class="border-t pt-4">
+      <%= slots.footer %>
+    </div>
+  <% end %>
+</div>

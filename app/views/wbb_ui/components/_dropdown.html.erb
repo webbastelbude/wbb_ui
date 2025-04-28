@@ -1,0 +1,21 @@
+<%
+  dropdown = dropdown
+  align = local_assigns.fetch(:align, :left) # :left oder :right
+  position_class = align == :right ? "origin-top-right right-0" : "origin-top-left left-0"
+  menu_classes = "absolute z-10 mt-2 w-48 #{position_class} rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 hidden"
+%>
+
+<div data-controller="dropdown" class="relative h-full">
+  <button type="button" class="inline-flex items-center h-full border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" data-action="click->dropdown#toggle">
+    <%= dropdown[:title] %>
+    <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+
+  <div data-dropdown-target="menu" class="<%= menu_classes %>">
+    <% (dropdown[:submenu] || []).each do |item| %>
+      <%= link_to item[:title], item[:url], method: item[:method], class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+    <% end %>
+  </div>
+</div>
